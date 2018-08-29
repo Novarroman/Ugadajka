@@ -1,54 +1,36 @@
 package ugadajcifru;
-
 import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
+        HumanPlayer human = new HumanPlayer();
+        ComputerPlayer cpu = new ComputerPlayer();
 
-        int whoseTurn;
-
-        HumPlayer human = new HumPlayer();
-        ComPlayer cpu = new ComPlayer();
-
-
-        System.out.println("Ведущий: Добро пожаловать в Угадайку! Кто загадывает первым?");
-        System.out.println("Ведущий: Введите 1, если хотите загадать число;");
-        System.out.println("Ведущий: или 0, если первой загадывает бездушная машина.");
+        System.out.println("Operator: Welcome to our guesser! Who picks a number first?");
+        System.out.println("Operator: Enter 1, if you wish to pick a number;");
+        System.out.println("Operator: Enter 0, if you let the soulless machine pick first.");
 
         //user decides who goes first
         Scanner scan = new Scanner(System.in);
-        int number = scan.nextInt();
-        while (!(number == 0) && !(number == 1)) {
-            System.out.println("Ведущий: Определитесь, пожалуйста! 0 - это компьютер, 1 - это вы.");
-            number = Integer.parseInt(scan.next());
+        int whoseTurn = scan.nextInt();
+        while (!(whoseTurn == 0) && !(whoseTurn == 1)) {
+            System.out.println("Operator: Make up your mind, please! 0 is for Computer, and 1 is for you.");
+            whoseTurn = Integer.parseInt(scan.next());
         }
-
-        {
-            whoseTurn = number;
-            System.out.println("Ведущий: Спасибо!");
-        }
+        System.out.println("Operator: Thank You!");
 
         if (whoseTurn == 0) {
-            System.out.println("Ведущий: Компьютер загадывает число.");
+            System.out.println("Operator: Computer picks a number.");
             cpu.takeTurn();
-
+            int refVar = cpu.getNumberInMind();
+            System.out.println("Operator: Try guessing the number it picked!");
+            human.guess(refVar);
         }
-        if (whoseTurn == 1) {
-            System.out.println("Ведущий: Загадайте число от одного до десяти - и введите его!");
+         if (whoseTurn == 1) {
+            System.out.println("Operator: Pick a number from one to ten - and enter it below!");
             human.takeTurn();
-        }
-
-        //guessing starts
-        if (whoseTurn == 1) {
             int refVar = human.getNumberInMind();
             cpu.guess(refVar);
-        }
-
-        if (whoseTurn == 0) {
-            int refVar = cpu.getNumberInMind();
-            System.out.println("Ведущий: попробуйте угадать число, загаданное компьютером!");
-            human.guess(refVar);
-
         }
     }
 }
